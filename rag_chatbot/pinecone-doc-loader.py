@@ -20,7 +20,7 @@ embeddings = HuggingFaceEmbeddings()
 
 vectorstore = PineconeVectorStore(index_name=index_name, embedding=embeddings)
 
-txt_dir = "../data/texts_filesizelimit_500000"
+txt_dir = "../data/texts_carl_limit500000"
 
 def check_metadata_size(metadatas):
     for meta in metadatas:
