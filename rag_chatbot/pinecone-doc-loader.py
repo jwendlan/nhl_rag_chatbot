@@ -20,7 +20,7 @@ embeddings = HuggingFaceEmbeddings()
 
 vectorstore = PineconeVectorStore(index_name=index_name, embedding=embeddings)
 
-txt_dir = "../data/texts_chunked"
+txt_dir = "../data/texts_filesizelimit_500000"
 
 def check_metadata_size(metadatas):
     for meta in metadatas:
@@ -36,12 +36,13 @@ def prune_metadata(metadata):
 for filename in os.listdir(txt_dir):
     if filename.endswith('.txt'):
         file_path = os.path.join(txt_dir, filename)
+        print(f"Processing: {filename}")
         
         # Load, split, and add to vector store
         loader = TextLoader(file_path)
         documents = loader.load()
         
-        text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
+        text_splitter = CharacterTextSplitter(chunk_size=7000, chunk_overlap=100)
         docs = text_splitter.split_documents(documents)
         # for doc in docs:
         #     print(doc)
@@ -60,6 +61,7 @@ for filename in os.listdir(txt_dir):
         # break
         vectorstore.add_documents(docs)
         print(f"Added documents from {filename} to vector store.")
+        # break
         # break
 
 # loader = TextLoader("../data/nhl_stats_full.txt")
