@@ -10,8 +10,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from langchain.embeddings import HuggingFaceEmbeddings
 
-os.environ['OPENAI_API_KEY'] = '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'
-os.environ['PINECONE_API_KEY'] = 'pcsk_2oxcYN_NPhzizrpYnXdAbvyAt38mF8iGZBNVLXRKqXhKjn94qWRUqEUAt3s8ZyetjnQTCr'
+
 
 # index_name = "llama-text-embed-v2-index"
 index_name = "huggingface"
