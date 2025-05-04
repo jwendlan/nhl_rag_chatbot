@@ -10,26 +10,15 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from langchain.embeddings import HuggingFaceEmbeddings
 
-os.environ['PINECONE_API_KEY'] = ""
+os.environ['PINECONE_API_KEY'] = "" #needs to be set Pinecone API Key
 
-index_name = ""
+index_name = "" #needs to be set to the Pinecone Index Name
 # embeddings = OpenAIEmbeddings()
-embeddings = HuggingFaceEmbeddings()
+embeddings = HuggingFaceEmbeddings() #can be changed to OpenAI Embeddings instead
 
 vectorstore = PineconeVectorStore(index_name=index_name, embedding=embeddings)
 
-txt_dir = "../data/texts_carl_limit500000"
-
-def check_metadata_size(metadatas):
-    for meta in metadatas:
-        meta_size = sys.getsizeof(str(meta))  # Get the size of metadata
-        if meta_size > 40960:
-            print(f"Metadata exceeds size limit: {meta_size} bytes")
-            return False  # Metadata size exceeds limit
-    return True
-
-def prune_metadata(metadata):
-    return {"source": metadata["source"]}  # Keep only the essential metadata
+txt_dir = "../data/texts_carl_limit500000" #input directory containing text files
 
 for filename in os.listdir(txt_dir):
     if filename.endswith('.txt'):
@@ -39,6 +28,7 @@ for filename in os.listdir(txt_dir):
         loader = TextLoader(file_path)
         documents = loader.load()
         
+        #chunking method, params can be modified for different size chunks
         text_splitter = CharacterTextSplitter(chunk_size=7000, chunk_overlap=100)
         docs = text_splitter.split_documents(documents)
         
